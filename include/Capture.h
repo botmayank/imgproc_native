@@ -10,13 +10,12 @@
 class Capture {
     public:
         Capture(std::string& path, unsigned int width, unsigned int height);
-        ~Capture();
         void read(std::shared_ptr<Frame> frame);
         unsigned int width, height, size;
 
     private:
         std::string& _path;
-        cv::VideoCapture *cap;
+        std::unique_ptr<cv::VideoCapture> cap;
 };
 
 #endif // CAPTURE_H_

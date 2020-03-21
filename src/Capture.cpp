@@ -5,14 +5,11 @@ Capture::Capture(std::string& path, unsigned int width, unsigned int height):
     std::cout << "Initializing Capture: " << width << "x" << height << std::endl;
     size = width * height;
 
-    cap = new cv::VideoCapture(_path);
+    cap = std::make_unique<cv::VideoCapture>(_path);
+    
     if (!cap->isOpened()) {
         std::cerr << "Failed to open path: " << _path << std::endl;
     }
-}
-
-Capture::~Capture() {
-    delete cap;
 }
 
 void Capture::read(std::shared_ptr<Frame> frame) {

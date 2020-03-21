@@ -21,7 +21,7 @@ int main() {
         cap.read(inputFrame);
 
         std::cout << "Frame data: [";
-        for(int i = 0; i < 10; ++i){
+        for(unsigned int i = 0; i < 10; ++i){
             std::cout << (int)inputFrame->data[i] << " ";
         }
         std::cout << "] " << std::endl;

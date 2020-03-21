@@ -11,18 +11,19 @@
 #include "Capture.h"
 
 int main() {
+    unsigned int width = 640, height = 480;
     std::cout << "Let's mess around with images!" << std::endl;
     std::string capture_path = "/dev/video0";
-    Capture cap(capture_path);
+    Capture cap(capture_path, width, height);
 
-    std::shared_ptr<Frame> inputFrame = std::make_shared<Frame>(640, 480);
+    std::shared_ptr<Frame> inputFrame = std::make_shared<Frame> (width, height);
 
-    while(1) {
+    while (1) {
         cap.read(inputFrame);
 
         std::cout << "Frame data: [";
-        for(unsigned int i = 0; i < 10; ++i){
-            std::cout << (int)inputFrame->data[i] << " ";
+        for (unsigned int i = 0; i < 10; ++i) {
+            std::cout << static_cast<int>(inputFrame->data[i]) << " ";
         }
         std::cout << "] " << std::endl;
 

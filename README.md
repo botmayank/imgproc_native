@@ -14,3 +14,9 @@ ninja
 cd build
 ./IMGPROC
 ```
+
+## OpenCV Libs Installation
+```
+sudo apt-get install libopencv-dev
+```
+

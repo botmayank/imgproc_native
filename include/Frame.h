@@ -1,4 +1,6 @@
 #ifndef FRAME_H_
+#define FRAME_H_
+
 #include <iostream>
 #include <vector>
 

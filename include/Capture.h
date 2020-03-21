@@ -1,4 +1,6 @@
 #ifndef CAPTURE_H_
+#define CAPTURE_H_
+
 #include <string>
 #include <memory>
 

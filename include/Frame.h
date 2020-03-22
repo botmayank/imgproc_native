@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <memory>
 
 enum class PixelFormat {
     RGB,        // w * h * 3
@@ -13,6 +14,8 @@ enum class PixelFormat {
 class Frame{
     public:
         Frame(unsigned int width, unsigned int height, PixelFormat pixelFormat = PixelFormat::RGB);
+        cv::Mat toMat();
+
         std::vector<uint8_t> data;
         unsigned int width, height, size;
         PixelFormat pixelFormat;

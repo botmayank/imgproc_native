@@ -15,14 +15,14 @@
 #define KEY_ESC     27
 
 int main() {
-    unsigned int width = 640, height = 480;
     std::cout << "Let's mess around with images!" << std::endl;
+
+    unsigned int width = 640, height = 480;
     std::string capturePath = "/dev/video0";
-    Capture cap(capturePath, width, height);
-
     std::string dispWindow = "Basic output";
-    Display disp(dispWindow, width, height);
 
+    Capture cap(capturePath, width, height);
+    Display disp(dispWindow, width, height);
     std::shared_ptr<Frame> inputFrame = std::make_shared<Frame> (width, height);
 
     while (1) {

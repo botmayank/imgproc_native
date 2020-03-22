@@ -6,6 +6,11 @@ Display::Display(std::string& windowName, unsigned int width, unsigned int heigh
 }
 
 void Display::show(std::shared_ptr<Frame> frame) {
-    cv::Mat frameMat(frame->height, frame->width, CV_8U, frame->data.data());
-    cv::imshow(_windowName, frameMat);
+    if(frame->pixelFormat == PixelFormat::RGB) {
+        cv::Mat frameMat(frame->height, frame->width, CV_8UC3, frame->data.data());
+        cv::imshow(_windowName, frameMat);
+    }
+    else {
+        std::cerr << "Unsupported format!" << std::endl;
+    }
 }

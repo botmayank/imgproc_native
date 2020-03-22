@@ -6,14 +6,16 @@ Capture::Capture(std::string& path, unsigned int width, unsigned int height):
     size = width * height;
 
     cap = std::make_unique<cv::VideoCapture>(_path);
-    
+
     if (!cap->isOpened()) {
         std::cerr << "Failed to open path: " << _path << std::endl;
     }
 }
 
 void Capture::read(std::shared_ptr<Frame> frame) {
-    for (unsigned int i = 0; i < frame->size; ++i) {
-        frame->data.push_back(127);
-    }
+    cv::Mat frameMat;
+    cap->read(frameMat);
+
+    cv::Mat flatMat = frameMat.reshape(1, frameMat.total()*frameMat.channels());
+    frame->data = frameMat.isContinuous()? flatMat : flatMat.clone();
 }

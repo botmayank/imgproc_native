@@ -38,10 +38,11 @@ int main(int argc, char** argv) {
     std::shared_ptr<Frame> inputFrame = std::make_shared<Frame> (width, height);
     unsigned int frameCount = 0;
 
+    cap.run(inputFrame); // start capture in separate thread
+
     while (1) {
         try{
             // std::cout << "Reading frame num: " << frameCount <<  std::endl;
-            cap.read(inputFrame);
             if(useFilter)
                 filter.process(inputFrame);
             disp.show(inputFrame);
@@ -55,7 +56,9 @@ int main(int argc, char** argv) {
             }
         } catch (std::exception &e) {
             std::cerr << "Exception caught: " << e.what() << std::endl;
+            break;
         }
     }
+    cap.stop();
     return 0;
 }

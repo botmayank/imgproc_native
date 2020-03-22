@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <memory>
+#include <mutex>
 #include <opencv2/opencv.hpp>
 
 enum class PixelFormat {
@@ -17,11 +18,16 @@ class Frame{
     public:
         Frame(unsigned int width, unsigned int height, PixelFormat pixelFormat = PixelFormat::RGB);
         void setData(cv::Mat frameMat);
+        void setFormat(PixelFormat format);
+        PixelFormat getFormat() { return pixelFormat; };
+        void toGray();
         cv::Mat toMat();
 
-        std::vector<uint8_t> data;
         unsigned int width, height, size;
+    private:
+        std::mutex frameMutex;
         PixelFormat pixelFormat;
+        std::vector<uint8_t> data;
 };
 
 #endif // FRAME_H_

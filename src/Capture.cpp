@@ -10,11 +10,24 @@ Capture::Capture(std::string& path, unsigned int width, unsigned int height):
     if (!cap->isOpened()) {
         std::cerr << "Failed to open path: " << _path << std::endl;
     }
+    keepRunning = false;
 }
 
 void Capture::read(std::shared_ptr<Frame> frame) {
-    cv::Mat frameMat;
-    cap->read(frameMat);
-    frame->pixelFormat = PixelFormat::RGB;
-    frame->setData(frameMat);
+    while(keepRunning){
+        cv::Mat frameMat;
+        cap->read(frameMat);
+        frame->setFormat(PixelFormat::RGB);
+        frame->setData(frameMat);
+    }
+}
+
+void Capture::run(std::shared_ptr<Frame> frame) {
+    keepRunning = true;
+    captureThread = std::make_unique<std::thread>(&Capture::read, this, frame);
+}
+
+void Capture::stop() {
+    keepRunning = false;
+    captureThread->detach(); // instead of join, to not block
 }

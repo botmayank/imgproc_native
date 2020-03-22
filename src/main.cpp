@@ -7,6 +7,7 @@
 #include <memory>
 #include <chrono>
 #include <thread>
+#include <exception>
 #include <opencv2/opencv.hpp>
 
 #include "Capture.h"
@@ -38,21 +39,23 @@ int main(int argc, char** argv) {
     unsigned int frameCount = 0;
 
     while (1) {
-        // std::cout << "Reading frame num: " << frameCount <<  std::endl;
+        try{
+            // std::cout << "Reading frame num: " << frameCount <<  std::endl;
+            cap.read(inputFrame);
+            if(useFilter)
+                filter.process(inputFrame);
+            disp.show(inputFrame);
 
-        cap.read(inputFrame);
-        if(useFilter)
-            filter.process(inputFrame);
-        disp.show(inputFrame);
+            frameCount++;
 
-        frameCount++;
-
-        char key = cv::waitKey(1);
-        if (key == KEY_ESC) {
-            std::cerr << "Exiting..." << std::endl;
-            break;
+            char key = cv::waitKey(1);
+            if (key == KEY_ESC) {
+                std::cerr << "Exiting..." << std::endl;
+                break;
+            }
+        } catch (std::exception &e) {
+            std::cerr << "Exception caught: " << e.what() << std::endl;
         }
     }
-
     return 0;
 }

@@ -15,8 +15,16 @@
 
 #define KEY_ESC     27
 
-int main() {
+int main(int argc, char** argv) {
     std::cout << "Let's mess around with images!" << std::endl;
+    bool useFilter = false;
+
+    if (argc == 2) {
+        std::string arg = argv[1];
+        if (arg == "gray")
+            useFilter = true;
+    }
+    std::cout << "Launching with filter set to: " << static_cast<int>(useFilter) << std::endl;
 
     unsigned int width = 640, height = 480;
     std::string capturePath = "/dev/video0";
@@ -33,7 +41,8 @@ int main() {
         // std::cout << "Reading frame num: " << frameCount <<  std::endl;
 
         cap.read(inputFrame);
-        filter.process(inputFrame);
+        if(useFilter)
+            filter.process(inputFrame);
         disp.show(inputFrame);
 
         frameCount++;

@@ -17,8 +17,7 @@ void Capture::read(std::shared_ptr<Frame> frame) {
     while(keepRunning){
         cv::Mat frameMat;
         cap->read(frameMat);
-        frame->setFormat(PixelFormat::RGB);
-        frame->setData(frameMat);
+        frame->setData(frameMat, PixelFormat::RGB);
     }
 }
 
@@ -29,5 +28,5 @@ void Capture::run(std::shared_ptr<Frame> frame) {
 
 void Capture::stop() {
     keepRunning = false;
-    captureThread->detach(); // instead of join, to not block
+    captureThread->join();
 }

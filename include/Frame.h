@@ -17,10 +17,10 @@ enum class PixelFormat {
 class Frame{
     public:
         Frame(unsigned int width, unsigned int height, PixelFormat pixelFormat = PixelFormat::RGB);
-        void setData(cv::Mat frameMat);
+        void setData(cv::Mat frameMat, PixelFormat format);
         void setFormat(PixelFormat format);
         PixelFormat getFormat() { return pixelFormat; };
-        void toGray();
+        
         cv::Mat toMat();
 
         unsigned int width, height, size;

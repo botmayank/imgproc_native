@@ -13,8 +13,7 @@ void Filter::process(std::shared_ptr<Frame> frame) {
     if(filter == FilterType::GRAY) {
         if(frame->getFormat() == PixelFormat::RGB){
             cvtColor(frameMat, frameMat, CV_BGR2GRAY);
-            frame->setFormat(PixelFormat::GRAY);
+            frame->setData(frameMat, PixelFormat::GRAY);
         }
     }
-    frame->setData(frameMat);
 }

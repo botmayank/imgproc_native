@@ -22,10 +22,11 @@ cv::Mat Frame::toMat() {
     }
 }
 
-void Frame::setData(cv::Mat frameMat) {
+void Frame::setData(cv::Mat frameMat, PixelFormat format) {
     cv::Mat flatMat = frameMat.reshape(1, frameMat.total()*frameMat.channels());
     std::lock_guard<std::mutex> guard(frameMutex);
     data = frameMat.isContinuous()? flatMat : flatMat.clone();
+    pixelFormat = format;
 }
 
 void Frame::setFormat(PixelFormat format) {

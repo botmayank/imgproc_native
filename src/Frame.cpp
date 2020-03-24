@@ -33,3 +33,28 @@ void Frame::setFormat(PixelFormat format) {
     std::lock_guard<std::mutex> guard(frameMutex);
     pixelFormat = format;
 }
+
+void Frame::toGraywithBrightness() {
+    cv::Mat frameMat = this->toMat();
+    cvtColor(frameMat, frameMat, CV_BGR2GRAY);
+    setData(frameMat, PixelFormat::GRAY);
+    {
+        std::lock_guard<std::mutex> guard(frameMutex);
+        for(auto i = data.begin(); i != data.end(); i++) {
+            unsigned int pix = static_cast<unsigned int>(static_cast<float>(*i) + brightness);
+            *i = clamp<uint8_t>(pix, 0, 255);
+        }
+    }
+}
+
+void Frame::incrementOffset(float offset) {
+    std::lock_guard<std::mutex> guard(frameMutex);
+    brightness = clamp<float>(brightness + offset, minBrightness, maxBrightness );
+    std::cerr << "Increased brightness to: " << static_cast<float>(brightness) << std::endl;
+}
+
+void Frame::decrementOffset(float offset) {
+    std::lock_guard<std::mutex> guard(frameMutex);
+    brightness = clamp<float>(brightness - offset, minBrightness, maxBrightness);
+    std::cerr << "Decreased brightness to: " << static_cast<float>(brightness) << std::endl;
+}

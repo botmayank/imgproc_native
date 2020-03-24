@@ -15,6 +15,8 @@
 #include "Filter.h"
 
 #define KEY_ESC     27
+#define KEY_o       111
+#define KEY_k       107
 
 int main(int argc, char** argv) {
     std::cout << "Let's mess around with images!" << std::endl;
@@ -53,6 +55,12 @@ int main(int argc, char** argv) {
             if (key == KEY_ESC) {
                 std::cerr << "Exiting..." << std::endl;
                 break;
+            } else if(key == KEY_o) {
+                // std::cerr << "Increase brightness" << std::endl;
+                filter.increase_brightness(inputFrame);
+            } else if(key == KEY_k){
+                // std::cerr << "Decrease brightness" << std::endl;
+                filter.decrease_brightness(inputFrame);
             }
         } catch (std::exception &e) {
             std::cerr << "Exception caught: " << e.what() << std::endl;

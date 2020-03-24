@@ -12,6 +12,8 @@ class Filter {
     public:
         Filter(unsigned int width, unsigned int height, FilterType filter = FilterType::GRAY);
         void process(std::shared_ptr<Frame> frame);
+        void increase_brightness(std::shared_ptr<Frame> frame);
+        void decrease_brightness(std::shared_ptr<Frame> frame);
         unsigned int width, height, size;
         FilterType filter;
 

@@ -3,9 +3,10 @@ project(IMGPROC_NATIVE LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 14)
 find_package(OpenCV REQUIRED)
+find_package(Threads REQUIRED)
 
-# set(CMAKE_BUILD_TYPE "Release")
-set(CMAKE_BUILD_TYPE "Debug")
+set(CMAKE_BUILD_TYPE "Release")
+# set(CMAKE_BUILD_TYPE "Debug")
 message("Cmake build type after setting: ${CMAKE_BUILD_TYPE}")
 
 # Debug mode ASAN flags
@@ -20,4 +21,4 @@ include_directories("${PROJECT_SOURCE_DIR}/include")
 link_directories(${OpenCV_LIBRARY_DIRS})
 
 add_executable(IMGPROC ${SOURCES})
-target_link_libraries(IMGPROC ${OpenCV_LIBS})
+target_link_libraries(IMGPROC ${OpenCV_LIBS} ${CMAKE_THREAD_LIBS_INIT})

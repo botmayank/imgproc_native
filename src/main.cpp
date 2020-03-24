@@ -13,12 +13,16 @@
 #include "Capture.h"
 #include "Display.h"
 #include "Filter.h"
+#include "KeyboardLed.h"
 
 #define KEY_ESC     27
 #define KEY_o       111
 #define KEY_k       107
 
 int main(int argc, char** argv) {
+    std::cout << "Blinking keyboard backlight!" << std::endl;
+    blinkLed(3);
+
     std::cout << "Let's mess around with images!" << std::endl;
     bool useFilter = false;
 

@@ -20,9 +20,6 @@
 #define KEY_k       107
 
 int main(int argc, char** argv) {
-    std::cout << "Blinking keyboard backlight!" << std::endl;
-    blinkLed(3);
-
     std::cout << "Let's mess around with images!" << std::endl;
     bool useFilter = false;
 
@@ -45,6 +42,9 @@ int main(int argc, char** argv) {
     unsigned int frameCount = 0;
 
     cap.run(inputFrame); // start capture in separate thread
+
+    KeyboardLed led(1); // blink delay in seconds
+    led.run();          // blink keyboard backlight in separate thread
 
     while (1) {
         try{
@@ -72,5 +72,6 @@ int main(int argc, char** argv) {
         }
     }
     cap.stop();
+    led.stop();
     return 0;
 }
